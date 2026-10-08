@@ -4,7 +4,7 @@ const os = require('os');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const APP_ENV = (process.env.APP_ENV || 'production').toLowerCase();
-const APP_VERSION = process.env.APP_VERSION || '1.0.0';
+const APP_VERSION = process.env.APP_VERSION || '1.1.0';
 const COMMIT_SHA = process.env.COMMIT_SHA || 'local-build';
 const DEPLOY_TIME = process.env.DEPLOY_TIME || new Date().toISOString();
 
@@ -242,7 +242,7 @@ app.get('/', (req, res) => {
       </div>
     </div>
 
-    <div class="banner">
+    <div class="banner" style="border-left-color: #38bdf8; background: rgba(56, 189, 248, 0.1);"><strong>?? Visible Change v1.1.0 Feature Release:</strong> Live telemetry & active health monitor deployed!</div><div class="banner">
       <strong>Pipeline Status:</strong> Serving live from <strong>${envTitle}</strong>. 
       ${isQA 
         ? 'Changes pushed to branch <code>qa</code> automatically deploy here for testing.' 
