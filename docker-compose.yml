@@ -1,0 +1,43 @@
+services:
+  web-prod:
+    image: ${PROD_IMAGE:-ghcr.io/lukaspresti/is373-website:latest}
+    container_name: is373-prod
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - APP_ENV=production
+      - APP_VERSION=${PROD_VERSION:-1.0.0}
+      - COMMIT_SHA=${PROD_COMMIT:-main}
+      - DEPLOY_TIME=${PROD_DEPLOY_TIME}
+    networks:
+      - hosting
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=hosting-web"
+      - "traefik.http.routers.is373-prod.rule=Host(`blandbred.org`, `www.blandbred.org`)"
+      - "traefik.http.routers.is373-prod.entrypoints=websecure"
+      - "traefik.http.services.is373-prod.loadbalancer.server.port=3000"
+
+  web-qa:
+    image: ${QA_IMAGE:-ghcr.io/lukaspresti/is373-website:qa}
+    container_name: is373-qa
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - APP_ENV=qa
+      - APP_VERSION=${QA_VERSION:-1.0.0}
+      - COMMIT_SHA=${QA_COMMIT:-qa}
+      - DEPLOY_TIME=${QA_DEPLOY_TIME}
+    networks:
+      - hosting
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=hosting-web"
+      - "traefik.http.routers.is373-qa.rule=Host(`qa.blandbred.org`, `dev.blandbred.org`)"
+      - "traefik.http.routers.is373-qa.entrypoints=websecure"
+      - "traefik.http.services.is373-qa.loadbalancer.server.port=3000"
+
+networks:
+  hosting:
+    external: true
+    name: hosting-web
