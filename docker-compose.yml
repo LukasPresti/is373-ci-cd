@@ -14,7 +14,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=hosting-web"
-      - "traefik.http.routers.is373-prod.rule=Host(`blandbred.org`, `www.blandbred.org`)"
+      - "traefik.http.routers.is373-prod.rule=Host(`blandbred.org`) || Host(`www.blandbred.org`)"
       - "traefik.http.routers.is373-prod.entrypoints=websecure"
       - "traefik.http.services.is373-prod.loadbalancer.server.port=3000"
 
@@ -33,7 +33,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=hosting-web"
-      - "traefik.http.routers.is373-qa.rule=Host(`qa.blandbred.org`, `dev.blandbred.org`)"
+      - "traefik.http.routers.is373-qa.rule=Host(`qa.blandbred.org`) || Host(`dev.blandbred.org`)"
       - "traefik.http.routers.is373-qa.entrypoints=websecure"
       - "traefik.http.services.is373-qa.loadbalancer.server.port=3000"
 
